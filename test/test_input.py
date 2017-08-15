@@ -4,6 +4,8 @@ from stock.input import Input
 
 CORRECT_EVENT = '{"type": "ProductCreated", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
 WRONG_TYPE_EVENT = '{"type": "ProductCreatedddd", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
+INCOMPLETE_EVENT = '{"type": "ProductUpdated", "id": 1, "timestamp": 123}'
+WRONG_DATA_EVENT = '{"type": "ProductEnded", "id": 1, "timestamp": "123"}'
 
 
 class InputTest(unittest.TestCase):
@@ -27,6 +29,12 @@ class InputTest(unittest.TestCase):
 
     def test_translate_wrong_type_event(self):
         self.assertRaises(ValueError, self.input.translate, WRONG_TYPE_EVENT)
+
+    def test_translate_incomplete_event(self):
+        self.assertRaises(ValueError, self.input.translate, INCOMPLETE_EVENT)
+
+    def test_translate_wrong_data_event(self):
+        self.assertRaises(ValueError, self.input.translate, WRONG_DATA_EVENT)
 
 
 if __name__ == '__main__':
