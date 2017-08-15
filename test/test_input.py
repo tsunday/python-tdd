@@ -1,6 +1,6 @@
 import unittest
 from stock.dispatcher import Dispatcher
-from stock.input import Input
+from stock.input.input_handler import InputHandler
 from test.fake_observer import Observer
 
 CORRECT_EVENT = '{"type": "ProductCreated", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
@@ -12,7 +12,7 @@ WRONG_DATA_EVENT = '{"type": "ProductEnded", "id": 1, "timestamp": "123"}'
 class InputTest(unittest.TestCase):
     def setUp(self):
         self.event_source = Dispatcher()
-        self.input = Input(self.event_source)
+        self.input = InputHandler(self.event_source)
 
     def test_require_event_source(self):
         self.assertEqual(len(self.event_source._observers), 1)

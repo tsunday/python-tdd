@@ -1,17 +1,10 @@
 import json
 
 from stock.dispatcher import Dispatcher
-
-SUPPORTED_EVENTS = {
-    'ProductCreated': [('type', str), ('id', int), ('stock', int), ('timestamp', int), ('parent_id', int)],
-    'ProductUpdated': [('type', str), ('id', int), ('stock', int), ('timestamp', int)],
-    'ProductEnded': [('type', str), ('id', int), ('timestamp', int)]
-}
-
-NULLABLE_FIELDS = ['parent_id']
+from stock.input.event_schema import *
 
 
-class Input(Dispatcher):
+class InputHandler(Dispatcher):
     def __init__(self, event_source):
         Dispatcher.__init__(self)
         event_source.add(self)
