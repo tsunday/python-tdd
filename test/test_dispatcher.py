@@ -1,14 +1,6 @@
 import unittest
 from stock.dispatcher import Dispatcher
-
-
-class Observer:
-    def __init__(self):
-        self.update_counter = 0
-
-    def update(self):
-        self.update_counter += 1
-        print('callback called')
+from test.fake_observer import Observer
 
 
 class DispatcherTest(unittest.TestCase):

@@ -1,6 +1,7 @@
 import unittest
 from stock.dispatcher import Dispatcher
 from stock.input import Input
+from test.fake_observer import Observer
 
 CORRECT_EVENT = '{"type": "ProductCreated", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
 WRONG_TYPE_EVENT = '{"type": "ProductCreatedddd", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
@@ -36,6 +37,12 @@ class InputTest(unittest.TestCase):
     def test_translate_wrong_data_event(self):
         self.assertRaises(TypeError, self.input.translate, WRONG_DATA_EVENT)
 
+    def test_dispatch_translated_events(self):
+        observer = Observer()
+        self.input.add(observer)
+        self.event_source.notify(CORRECT_EVENT)
+        self.event_source.notify(INCOMPLETE_EVENT)
+        self.assertEqual(observer.update_counter, 1)
 
 if __name__ == '__main__':
     unittest.main()

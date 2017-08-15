@@ -1,5 +1,7 @@
 import json
 
+from stock.dispatcher import Dispatcher
+
 SUPPORTED_EVENTS = {
     'ProductCreated': [('type', str), ('id', int), ('stock', int), ('timestamp', int), ('parent_id', int)],
     'ProductUpdated': [('type', str), ('id', int), ('stock', int), ('timestamp', int)],
@@ -9,9 +11,16 @@ SUPPORTED_EVENTS = {
 NULLABLE_FIELDS = ['parent_id']
 
 
-class Input:
+class Input(Dispatcher):
     def __init__(self, event_source):
+        Dispatcher.__init__(self)
         event_source.add(self)
+
+    def update(self, body):
+        try:
+            self.notify(self.translate(body))
+        except(ValueError, TypeError):
+            print('Unable to process input event')
 
     def translate(self, event):
         translated_event = json.loads(event)
