@@ -34,7 +34,7 @@ class InputTest(unittest.TestCase):
         self.assertRaises(ValueError, self.input.translate, INCOMPLETE_EVENT)
 
     def test_translate_wrong_data_event(self):
-        self.assertRaises(ValueError, self.input.translate, WRONG_DATA_EVENT)
+        self.assertRaises(TypeError, self.input.translate, WRONG_DATA_EVENT)
 
 
 if __name__ == '__main__':
