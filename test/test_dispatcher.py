@@ -1,6 +1,7 @@
 import unittest
+
 from stock.dispatcher import Dispatcher
-from test.fake_observer import Observer
+from test.test_utils.fake_observer import Observer
 
 
 class DispatcherTest(unittest.TestCase):

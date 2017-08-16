@@ -1,7 +1,8 @@
 import unittest
+
 from stock.dispatcher import Dispatcher
 from stock.input.input_handler import InputHandler
-from test.fake_observer import Observer
+from test.test_utils.fake_observer import Observer
 
 CORRECT_EVENT = '{"type": "ProductCreated", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
 WRONG_TYPE_EVENT = '{"type": "ProductCreatedddd", "id": 1, "stock": 10, "timestamp": 123, "parent_id": null}'
