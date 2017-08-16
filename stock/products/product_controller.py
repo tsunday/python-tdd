@@ -50,6 +50,6 @@ class ProductController:
             stocks = {**stocks, **tree.stock_summary()}
         return stocks
 
-    def summary(self):
+    def send_summary(self):
         self.notifier.notify(OutputEvent(type='StockSummary', stocks=self.stocks()))
 

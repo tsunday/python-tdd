@@ -10,4 +10,4 @@ if __name__ == '__main__':
     products = ProductController(input, output)
 
     event_source.consume()
-    products.summary()
+    products.send_summary()
