@@ -1,13 +1,17 @@
 from stock.products.product_tree import ProductTree
-
+from stock.products.output_event import OutputEvent
 
 class ProductController:
     def __init__(self, event_source, notifier):
         self.trees = {}
         self.notifier = notifier
+        self.timestamp = 0
         event_source.add(self)
 
     def update(self, body):
+        if body['timestamp'] < self.timestamp:
+            return
+        self.timestamp = body['timestamp']
         body_type = body['type']
         if body_type == 'ProductCreated':
             self.create_product(body)
@@ -39,3 +43,13 @@ class ProductController:
             product = tree.get(id)
             if product != None: return tree
         return None
+
+    def stocks(self):
+        stocks = {}
+        for tree in self.trees.values():
+            stocks = {**stocks, **tree.stock_summary()}
+        return stocks
+
+    def summary(self):
+        self.notifier.notify(OutputEvent(type='StockSummary', stocks=self.stocks()))
+
