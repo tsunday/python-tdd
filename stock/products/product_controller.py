@@ -1,4 +1,4 @@
-from stock.product_tree.product_tree import ProductTree
+from stock.products.product_tree import ProductTree
 
 
 class ProductController:
@@ -8,16 +8,19 @@ class ProductController:
         event_source.add(self)
 
     def update(self, body):
-        type = body['type']
-        if type == 'ProductCreated':
+        body_type = body['type']
+        if body_type == 'ProductCreated':
             self.create_product(body)
-        if type == 'ProductUpdated':
+        if body_type == 'ProductUpdated':
             self.update_product(body)
-        if type == 'ProductEnded':
+        if body_type == 'ProductEnded':
             self.end_product(body)
 
     def create_product(self, body):
-        self.trees[body['id']] = ProductTree(body['id'], body['stock'], self.notifier)
+        if body['parent_id'] == None:
+            self.trees[body['id']] = ProductTree(body['id'], body['stock'], self.notifier)
+        else:
+            self.trees[body['parent_id']].add_child(body['id'], body['stock'])
 
     def update_product(self, body):
         tree = self.find_tree(body['id'])

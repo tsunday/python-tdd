@@ -8,5 +8,5 @@ class FileNotifier(Notifier):
         self.filepath = filepath
 
     def notify(self, message_obj):
-        with open(self.filepath, 'w') as output_file:
-            output_file.write(json.dumps(message_obj.__dict__))
+        with open(self.filepath, 'a') as output_file:
+            output_file.write(json.dumps(message_obj.__dict__) + '\n')

@@ -1,5 +1,5 @@
-from stock.product_tree.product import Product
-from stock.product_tree.output_event import OutputEvent
+from stock.products.product import Product
+from stock.products.output_event import OutputEvent
 
 
 class ProductTree:
@@ -12,14 +12,14 @@ class ProductTree:
         self._childs[id] = Product(id, self._parent.id, stock)
         self.synch_stock(id, stock)
 
-    def synch_stock(self, child_id, new_value):
+    def synch_stock(self, id, new_value):
         self._parent.stock = new_value
-        if self._parent.id != child_id:
+        if self._parent.id != id:
             self.notifier.notify(OutputEvent('ProductUpdated', self._parent.id, new_value))
         for child_id in self._childs:
             self._childs[child_id].stock = new_value
             if child_id != id:
-                self.notifier.notify(OutputEvent('ProductUpdated', self._parent.id, new_value))
+                self.notifier.notify(OutputEvent('ProductUpdated', child_id, new_value))
 
     def update(self, id, stock):
         self.synch_stock(id, stock)

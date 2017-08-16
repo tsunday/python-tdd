@@ -1,6 +1,6 @@
 import unittest
 
-from stock.product_tree.product_tree import ProductTree
+from stock.products.product_tree import ProductTree
 from test.test_utils.fake_notifier import Notifier
 
 
