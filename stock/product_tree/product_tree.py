@@ -23,7 +23,10 @@ class ProductTree:
     def get(self, id):
         if self._parent.id == id:
             return self._parent
-        return self._childs[id]
+        try:
+            return self._childs[id]
+        except:
+            return None
 
     def end(self, id):
         if self._parent.id != id:
