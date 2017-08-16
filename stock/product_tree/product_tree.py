@@ -17,6 +17,8 @@ class ProductTree:
 
     def update(self, id, stock):
         self.synch_stock(stock)
+        if(stock == 0):
+            self.end_others(id)
 
     def get(self, id):
         if self._parent.id == id:
@@ -34,5 +36,6 @@ class ProductTree:
         for child_id in self._childs:
             if id != child_id: self._childs[child_id].end()
         if id != self._parent.id: self._parent.end()
+
 
 

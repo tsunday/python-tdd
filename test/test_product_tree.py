@@ -20,6 +20,13 @@ class ProductTreeTest(unittest.TestCase):
         self.assertTrue(self.tree.get(1).is_ended)
         self.assertTrue(self.tree.get(2).is_ended)
 
+    def test_end_products_on_nulled_stock(self):
+        self.tree.add_child(3, 8)
+        self.tree.update(2, 0)
+        self.assertTrue(self.tree.get(1).is_ended)
+        self.assertTrue(self.tree.get(3).is_ended)
+        self.assertFalse(self.tree.get(2).is_ended)
+
 
 if __name__ == '__main__':
     unittest.main()
