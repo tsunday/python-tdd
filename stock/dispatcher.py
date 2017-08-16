@@ -5,6 +5,6 @@ class Dispatcher:
     def add(self, observer):
         self._observers.append(observer)
 
-    def notify(self, body):
+    def notify(self, body=None):
         for observer in self._observers:
             observer.update(body)
