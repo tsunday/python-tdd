@@ -2,8 +2,9 @@ from stock.product_tree.product_tree import ProductTree
 
 
 class ProductController:
-    def __init__(self, event_source):
+    def __init__(self, event_source, notifier):
         self.trees = {}
+        self.notifier = notifier
         event_source.add(self)
 
     def update(self, body):
@@ -16,7 +17,7 @@ class ProductController:
             self.end_product(body)
 
     def create_product(self, body):
-        self.trees[body['id']] = ProductTree(body['id'], body['stock'])
+        self.trees[body['id']] = ProductTree(body['id'], body['stock'], self.notifier)
 
     def update_product(self, body):
         tree = self.find_tree(body['id'])

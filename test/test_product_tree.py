@@ -1,11 +1,12 @@
 import unittest
 
 from stock.product_tree.product_tree import ProductTree
+from test.test_utils.fake_notifier import Notifier
 
 
 class ProductTreeTest(unittest.TestCase):
     def setUp(self):
-        self.tree = ProductTree(1, 10)
+        self.tree = ProductTree(1, 10, Notifier())
         self.tree.add_child(2, 9)
 
     def test_synchronize_stock(self):
